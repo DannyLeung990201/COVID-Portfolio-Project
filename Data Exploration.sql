@@ -115,8 +115,3 @@ select * from CTE
 where OneDosePopluationPercentage < 100 AND FullDosePopluationPercentage < 100
 and location = 'United States'
 order by 8 desc
-
-
-
-
-
