@@ -1,11 +1,11 @@
 /*
 Covid 19 Data Exploration 
 
-Skills used: Joins, Windows Functions, Aggregate Functions, Converting Data Types
+Skills used: Joins, Windows Functions, Aggregate Functions, Converting Data Types, CTEs
 
 */
 
--- Show what information havein the table
+-- Show what information have in the table
 Select *
 From CovidDeaths_2024
 Where continent is not null 
@@ -36,11 +36,12 @@ order by 1,2
 
 -- Countries with Highest Infection Rate compared to Population
 
-Select Location, Population, MAX(total_cases) as InfectedCount,  Max((total_cases/population))*100 as InfectedPercentage
+Select date,Location, Population, MAX(total_cases) as InfectedCount,  Max((total_cases/population))*100 as InfectedPercentage
 From CovidDeaths_2024
 --Where location like '%states%'
-Group by Location, Population
+Group by Location, Population,date
 order by InfectedPercentage desc
+
 
 
 -- Countries with Highest Death Count per Population
@@ -79,17 +80,15 @@ where continent is not null
 Group By date
 order by 1,2
 
---
-select 
-a.Continent,a.location,a.population,a.date,a.total_cases,a.new_cases,a.total_deaths,a.new_deaths,a.reproduction_rate,a.icu_patients,a.hosp_patients,b.new_tests,b.positive_rate
-,b.total_vaccinations,b.people_vaccinated as at_least_one_dose,b.people_fully_vaccinated as completed_primary_doses,b.total_boosters,b.new_vaccinations,b.new_people_vaccinated_smoothed,population_density,median_age,gdp_per_capita,
-cardiovasc_death_rate,diabetes_prevalence,female_smokers,male_smokers,handwashing_facilities,life_expectancy
-from
-CovidDeaths_2024 a
-inner join CovidVaccinations_2024 b
-on a.date = b.date and a.location = b.location
-where a.location = 'United States' --and a.date = '2023-05-09'
-order by 4 desc
+--select 
+--*
+--from
+--CovidDeaths_2024 a
+--inner join CovidVaccinations_2024 b
+--on a.date = b.date and a.location = b.location
+--where a.continent is not null
+--and a.location = 'United States' --and a.date = '2023-05-09'
+--order by 4 desc
 
 
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine & fully vaccinated
@@ -110,8 +109,25 @@ inner join CovidVaccinations_2024 b
 on a.date = b.date and a.location = b.location--and date between '2020-08-08' and '2024-01-13'
 where a.continent is not null
 group by a.location,a.population
+),
+CTE2 as
+(
+Select Location,population, (max(cast(total_deaths as int))/population *100) as DeathPercentage
+From CovidDeaths_2024
+where continent is not null 
+group by location,population
 )
-select * from CTE
-where OneDosePopluationPercentage < 100 AND FullDosePopluationPercentage < 100
-and location = 'United States'
-order by 8 desc
+select 
+a.location
+,a.population
+--,TotalCasesCount
+--,TotalDeathsCount
+--,DeathPercentage
+,TotalOneDose
+,TotalFullyDoses
+,OneDosePopluationPercentage
+,FullDosePopluationPercentage
+from CTE a
+inner join CTE2 b on a.location = b.location and a.population = b.population
+where OneDosePopluationPercentage < 100 AND FullDosePopluationPercentage < 100 --and a.location in ('United States','India','United Kingdom','Mexico','China')
+order by a.location
