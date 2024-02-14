@@ -74,10 +74,10 @@ where continent is not null
 order by 1,2
 
 -- Global Stat. for each day 
-Select date,SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
+Select continent,date,SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths--, SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
 From CovidDeaths_2024
 where continent is not null 
-Group By date
+Group By date,continent
 order by 1,2
 
 --select 
@@ -97,7 +97,9 @@ WITH CTE as
 (
 select a.location,a.population
 ,MAX(cast(total_cases as int)) as TotalCasesCount
+,sum(MAX(cast(total_cases as int))) over () as GlobalCases
 ,max(cast(total_deaths as int)) as TotalDeathsCount
+,sum(MAX(cast(total_deaths as int))) over () as GlobalDeaths
 --,sum(cast(icu_patients as int)) as TotalIcu
 --,sum(cast(hosp_patients as int)) as TotalHosp
 ,max(cast(b.people_vaccinated as bigint)) as TotalOneDose
@@ -120,9 +122,11 @@ group by location,population
 select 
 a.location
 ,a.population
---,TotalCasesCount
---,TotalDeathsCount
---,DeathPercentage
+,TotalCasesCount
+,GlobalCases
+,TotalDeathsCount
+,GlobalDeaths
+,DeathPercentage
 ,TotalOneDose
 ,TotalFullyDoses
 ,OneDosePopluationPercentage
