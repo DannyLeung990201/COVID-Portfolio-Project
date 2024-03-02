@@ -14,14 +14,21 @@ Tableau Portfolio Project Link: https://public.tableau.com/app/profile/yau.fung.
 Skills
 ---
 ■	DBMS: MS SQL Server, Oracle 
-■	BI & Visualization Tools: Tableau, Power BI, SSRS 
+
+■ BI & Visualization Tools: Tableau, Power BI, SSRS 
+
 ■	Python (Pandas, NumPy, Matplotlib) 
+
 ■	Excel (VBA, Pivot Table, Pivot Chart, XLOOKUP, VLOOKUP, HLOOKUP)
+
 ■	ETL Tools: SSIS
+
 ■	Statistical analysis, data extraction, data cleansing, data processing and data visualization
-■	Communication skills (English, Cantonese, Mandarin) 
+
+■	Communication skills (English, Cantonese, Mandarin)
 
 Certifications & Licenses
 ---
 ■	SQL Essential Training (LinkedIn Learning)
+
 ■	Introduction to Statistics by Stanford University (Coursera)
