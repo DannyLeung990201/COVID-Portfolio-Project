@@ -1,8 +1,10 @@
 About Me:
 ---
 I'm a Data Analytics Consultant with hands-on experience in **SQL**, **Power BI**, **SSRS** and **Excel** serving clients across diverse sectors including **healthcare** and **business** and **exploring new opportunities** in Canada.
+
 A Holder of an **Open Work Permit** and **available to work immediately**.
-My Resume and certification can be found at DannyLeung990201/Resume
+
+My Resume and certification can be found at **DannyLeung990201/Resume**
 
 My Projects (Portfolio)
 ---
